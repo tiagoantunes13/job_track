@@ -8,7 +8,7 @@
 <% end %>
 
 <!-- Job Application Card -->
-<%= render @job_application %>
+<%= render @job_application, job: @job_application.job %>
 
 
 <%= render 'cover_letter', job_application: @job_application %>

@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_20_095054) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_20_143506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "apply_links", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.string "url", null: false
+    t.string "source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_apply_links_on_job_id"
+  end
 
   create_table "chats", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -50,21 +59,34 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_095054) do
   end
 
   create_table "job_applications", force: :cascade do |t|
-    t.text "company"
-    t.text "position"
     t.integer "status", default: 0
     t.text "notes"
     t.date "application_date"
-    t.text "job_posting_url"
     t.text "contact_person"
     t.integer "expectations", default: 0
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "cover_letter"
-    t.text "post"
-    t.string "location", default: "Remote", null: false
+    t.bigint "job_id", null: false
+    t.index ["job_id"], name: "index_job_applications_on_job_id"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.string "external_job_id"
+    t.string "source", default: "internal", null: false
+    t.string "title", null: false
+    t.string "company", null: false
+    t.string "location"
+    t.text "description"
+    t.string "job_posting_url"
+    t.jsonb "job_data", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture_url"
+    t.index ["external_job_id", "source"], name: "index_jobs_on_external_job_id_and_source", unique: true
+    t.index ["external_job_id"], name: "index_jobs_on_external_job_id"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -114,6 +136,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_095054) do
     t.index ["provider"], name: "index_models_on_provider"
   end
 
+  create_table "saved_jobs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "job_id", null: false
+    t.text "notes"
+    t.datetime "saved_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_saved_jobs_on_job_id"
+    t.index ["user_id"], name: "index_saved_jobs_on_user_id"
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "name"
     t.integer "proficiency"
@@ -152,14 +185,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_095054) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "apply_links", "jobs"
   add_foreign_key "chats", "models"
   add_foreign_key "educations", "users"
   add_foreign_key "experiences", "users"
+  add_foreign_key "job_applications", "jobs"
   add_foreign_key "job_applications", "users"
   add_foreign_key "languages", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "models"
   add_foreign_key "messages", "tool_calls"
+  add_foreign_key "saved_jobs", "jobs"
+  add_foreign_key "saved_jobs", "users"
   add_foreign_key "skills", "users"
   add_foreign_key "tool_calls", "messages"
 end

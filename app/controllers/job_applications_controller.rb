@@ -14,10 +14,12 @@ class JobApplicationsController < ApplicationController
   # GET /job_applications/new
   def new
     @job_application = JobApplication.new
+    @job = Job.find(params[:job_id]) if params[:job_id].present?
   end
 
   # GET /job_applications/1/edit
   def edit
+    @job = @job_application.job
   end
 
   # POST /job_applications
@@ -64,6 +66,6 @@ class JobApplicationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def job_application_params
-      params.require(:job_application).permit(:company, :position, :post, :status, :notes, :application_date, :job_posting_url, :contact_person, :expectations, :cover_letter, :location)
+      params.require(:job_application).permit(:company, :position, :post, :status, :notes, :application_date, :job_posting_url, :contact_person, :expectations, :cover_letter, :location, :job_id)
     end
 end

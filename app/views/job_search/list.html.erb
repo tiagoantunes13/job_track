@@ -1,0 +1,105 @@
+<%# app/views/job_search/list.html.erb %>
+<% content_for :title, "Job Listings" %>
+
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Flash Messages -->
+    <% if notice %>
+      <div class="mb-6 bg-emerald-50 border-l-4 border-emerald-400 p-4 rounded-r-lg">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-emerald-700 font-medium"><%= notice %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-4xl font-bold text-gray-900">Job Listings</h1>
+          <p class="mt-2 text-lg text-gray-600">Search results for your query</p>
+        </div>
+        <%= form_with url: job_search_list_path, method: :get, class: "flex items-end gap-4" do |form| %>
+          <div class="flex flex-col">
+            <%= form.label :q, "Job Title", class: "text-sm font-medium text-gray-700" %>
+            <%= form.text_field :q, value: params[:q], placeholder: "e.g., Ruby developer", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+          </div>
+          
+          <div class="flex flex-col">
+            <%= form.label :location, "Location", class: "text-sm font-medium text-gray-700" %>
+            <%= form.text_field :location, value: params[:location], placeholder: "e.g., United States", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+          </div>
+
+          <%= form.submit "Search", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer" %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Jobs Grid -->
+    <% if @jobs.any? %>
+      <div id="job_listings" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @jobs.each do |job| %>
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-indigo-200 transition-all duration-300 group flex flex-col h-full">
+            <!-- Job Title & Link -->
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">
+              <%= link_to job[:title], job[:share_link], target: "_blank", rel: "noopener", class: "hover:underline" %>
+            </h2>
+
+            <%= form_with url: from_serpapi_path, method: :post do |form| %>
+              <%= form.hidden_field :job, value: job.to_json %>
+              <%= form.submit 'Save to my Jobs' %>
+            <% end %>
+
+            <!-- Company & Location -->
+            <div class="text-gray-800 mb-3">
+              <p class="text-lg font-medium"><%= job[:company_name] %></p>
+              <div class="flex items-center text-gray-600 mt-1">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                </svg>
+                <span><%= job[:location] %></span>
+              </div>
+            </div>
+
+            <!-- Via -->
+            <p class="text-sm text-gray-600 mb-3"><strong>Via:</strong> <%= job[:via] %></p>
+
+            <!-- Description (truncated) -->
+            <p class="text-sm text-gray-700 line-clamp-3 mb-4">
+              <%= truncate(job[:description], length: 150) %>
+            </p>
+
+            <!-- Apply Buttons -->
+            <div class="mt-auto">
+              <% job[:apply_options].each do |apply_option| %>
+                <%= link_to apply_option[:title], apply_option[:link], target: "_blank", rel: "noopener",
+                      class: "inline-block px-4 py-2 mr-2 mb-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <!-- Empty State -->
+      <div class="text-center py-12">
+        <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No jobs found</h3>
+        <p class="text-gray-600 mb-6">Try refining your search criteria.</p>
+      </div>
+    <% end %>
+
+  </div>
+</div>

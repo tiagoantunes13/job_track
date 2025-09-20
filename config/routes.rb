@@ -12,9 +12,13 @@ Rails.application.routes.draw do
       get :generate_cover_letter
     end
   end
+  resources :jobs
+  post 'from_serpapi', to: 'jobs#from_serpapi', as: :from_serpapi
   resources :remote_analyses, only: [:new, :create]
 
   devise_for :users
+
+  get 'job_search/list', to: 'job_search#list', as: 'job_search_list'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

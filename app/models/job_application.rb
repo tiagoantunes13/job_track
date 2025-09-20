@@ -1,5 +1,6 @@
 class JobApplication < ApplicationRecord
   belongs_to :user, optional: true
+  belongs_to :job
 
   validates :company, presence: true
   validates :position, presence: true
@@ -29,5 +30,17 @@ class JobApplication < ApplicationRecord
 
   def generate_cover_letter
     PROMPT.gsub("{JOB_POST_TEXT}", self.post).gsub("{PROFILE_JSON}", user.profile_json)
+  end
+
+  def position
+    job.title
+  end
+
+  def company
+    job.company
+  end
+
+  def location
+    job.location
   end
 end

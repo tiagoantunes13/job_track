@@ -1,12 +1,17 @@
-<% content_for :title, "Editing job application" %>
+<% content_for :title, "Editing Job Application" %>
 
-<h1>Editing job application</h1>
+<div class="max-w-3xl mx-auto mt-10">
+  <!-- Page header -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Edit Job Application</h1>
+    <div class="space-x-4">
+      <%= link_to "View", @job_application, 
+          class: "inline-block px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-full hover:bg-blue-50 transition" %>
+      <%= link_to "Back", job_applications_path, 
+          class: "inline-block px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition" %>
+    </div>
+  </div>
 
-<%= render "form", job_application: @job_application %>
-
-<br>
-
-<div>
-  <%= link_to "Show this job application", @job_application %> |
-  <%= link_to "Back to job applications", job_applications_path %>
+  <!-- Form Card -->
+  <%= render "form", job_application: @job_application %>
 </div>
