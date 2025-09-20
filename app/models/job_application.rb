@@ -5,7 +5,7 @@ class JobApplication < ApplicationRecord
   validates :company, presence: true
   validates :position, presence: true
 
-  enum :status, { applied: 0, interviewing: 1, offered: 2, rejected: 3, accepted: 4 }
+  enum :status, { applied: 0, call: 1, interviewing: 2, rejected: 3, offered: 4 }
   enum :expectations, { low: 0, medium: 1, high: 2 }
 
 

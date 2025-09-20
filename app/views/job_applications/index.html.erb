@@ -29,7 +29,7 @@
       </div>
       
       <!-- Stats Bar -->
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-4">
         <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
           <div class="flex items-center">
             <div class="p-2 bg-blue-100 rounded-lg">
@@ -51,8 +51,8 @@
               </svg>
             </div>
             <div class="ml-3">
-              <p class="text-sm font-medium text-gray-600">Pending</p>
-              <p class="text-xl font-bold text-gray-900"><%= @job_applications.where(status: 'applied').count %></p>
+              <p class="text-sm font-medium text-gray-600">Call</p>
+              <p class="text-xl font-bold text-gray-900"><%= @job_applications.where(status: 'call').count %></p>
             </div>
           </div>
         </div>
@@ -65,7 +65,20 @@
             </div>
             <div class="ml-3">
               <p class="text-sm font-medium text-gray-600">Interviews</p>
-              <p class="text-xl font-bold text-gray-900"><%= @job_applications.where(status: ['phone_screen', 'interview']).count %></p>
+              <p class="text-xl font-bold text-gray-900"><%= @job_applications.where(status: 'interviewing').count %></p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+          <div class="flex items-center">
+            <div class="p-2 bg-green-100 rounded-lg">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-gray-600">Rejection</p>
+              <p class="text-xl font-bold text-gray-900"><%= @job_applications.where(status: 'rejected').count %></p>
             </div>
           </div>
         </div>
@@ -78,7 +91,7 @@
             </div>
             <div class="ml-3">
               <p class="text-sm font-medium text-gray-600">Offers</p>
-              <p class="text-xl font-bold text-gray-900"><%= @job_applications.where(status: ['offer', 'hired']).count %></p>
+              <p class="text-xl font-bold text-gray-900"><%= @job_applications.where(status: 'offered').count %></p>
             </div>
           </div>
         </div>
