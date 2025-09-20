@@ -18,6 +18,9 @@ gem "stimulus-rails"
 # serpapi for job search
 gem 'serpapi', '~> 1.0', '>= 1.0.1'
 
+# ruby llm schema
+gem 'ruby_llm-schema'
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 

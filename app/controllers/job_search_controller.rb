@@ -33,7 +33,10 @@ class JobSearchController < ApplicationController
       total_jobs.concat(results[:jobs_results])
     end
 
-    @jobs = total_jobs
+    @jobs = total_jobs.uniq { |job| job[:job_id] }
+    jobs_matter_id = JobApplication.where(user: current_user).pluck(:job_id).uniq
+    jobs_matter = Job.where(id: jobs_matter_id)
+    @job_external_ids = jobs_matter.where(source: 'serpapi').pluck(:external_job_id)
   rescue StandardError => e
     @jobs = []
   end

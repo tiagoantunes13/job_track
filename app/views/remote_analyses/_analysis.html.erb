@@ -1,32 +1,41 @@
 <div id="location_answer">
-
-<% if response.present? %>
-  <div class="mt-8">
-    <% if response == 'Remote' %>
-      <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-xl shadow-sm flex items-center space-x-4">
-        <span class="text-3xl">🌐</span>
-        <div>
-          <p class="text-green-800 font-bold text-lg">Remote Job Detected</p>
-          <p class="text-green-600 text-sm">You can work from anywhere.</p>
+  <% if response.present? %>
+    <div class="mt-8">
+      <% if response['veridict'] == 'remote' %>
+        <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-xl shadow-sm flex items-center space-x-4">
+          <span class="text-3xl">🌐</span>
+          <div>
+            <p class="text-green-800 font-bold text-lg">Remote Job Detected</p>
+            <p class="text-green-600 text-sm"><%= response['explanation'] %></p>
+          </div>
         </div>
-      </div>
-    <% else %>
-      <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-xl shadow-sm flex items-center space-x-4">
-        <span class="text-3xl">🏢</span>
-        <div>
-          <p class="text-red-800 font-bold text-lg">On-Site Position</p>
-          <p class="text-red-600 text-sm">This job requires you to be in the office.</p>
+      <% elsif response['veridict'] == 'hybrid' %>
+        <div class="bg-red-50 border-l-4 border-yellow-500 p-6 rounded-xl shadow-sm flex items-center space-x-4">
+          <span class="text-3xl">🏢</span>
+          <div>
+            <p class="text-yellow-800 font-bold text-lg">Hybrid Position</p>
+            <p class="text-yellow-600 text-sm"><%= response['explanation'] %></p>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <p class="mt-6 text-gray-500 italic">No analysis yet.</p>
-<% end %>
-
-
-<h1>REAL ANSWER</h1>
-<p><%= response %></p>
-
-
+      <% elsif response['veridict'] == 'onsite' %>
+        <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-xl shadow-sm flex items-center space-x-4">
+          <span class="text-3xl">🏢</span>
+          <div>
+            <p class="text-red-800 font-bold text-lg">On-Site Position</p>
+            <p class="text-red-600 text-sm"><%= response['explanation'] %></p>
+          </div>
+        </div>
+      <% else %>
+        <div class="bg-red-50 border-l-4 border-grey-500 p-6 rounded-xl shadow-sm flex items-center space-x-4">
+          <span class="text-3xl">🏢</span>
+          <div>
+            <p class="text-grey-800 font-bold text-lg">Not Sure</p>
+            <p class="text-grey-600 text-sm"><%= response['explanation'] %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="mt-6 text-gray-500 italic">No analysis yet.</p>
+  <% end %>
 </div>

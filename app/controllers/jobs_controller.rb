@@ -10,6 +10,16 @@ class JobsController < ApplicationController
     @job = Job.new
   end
 
+  def create
+    @job = Job.new(job_params)
+
+    if @job.save
+      redirect_to @job, notice: 'Job was successfully created.', status: :see_other
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   def show
     @job = Job.find(params[:id])
     @applied_by_user = current_user.job_applications.exists?(job_id: @job.id)

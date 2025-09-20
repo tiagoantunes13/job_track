@@ -29,7 +29,7 @@ class JobApplication < ApplicationRecord
   PROMPT
 
   def generate_cover_letter
-    PROMPT.gsub("{JOB_POST_TEXT}", self.post).gsub("{PROFILE_JSON}", user.profile_json)
+    PROMPT.gsub("{JOB_POST_TEXT}", self.job.description).gsub("{PROFILE_JSON}", user.profile_json)
   end
 
   def position
