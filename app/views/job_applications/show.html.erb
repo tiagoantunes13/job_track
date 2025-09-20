@@ -23,10 +23,14 @@
     <p><strong>Position:</strong> <%= @job_application.position %></p>
     <p><strong>Applied On:</strong> <%= @job_application.application_date.strftime("%b %d, %Y") if @job_application.application_date %></p>
     <p>
-      <strong>Location:</strong>
+      <strong>Expectations:</strong>
       <span class="inline-block text-xs font-medium px-3 py-1 rounded-full <%= expectations_badge_class(@job_application.expectations) %>">
         <%= @job_application.expectations %>
       </span>
+    </p>
+    <p>
+      <strong>Location:</strong>
+      <%= @job_application.location %>
     </p>
     <p><strong>Notes:</strong> <%= @job_application.notes %></p>
   </div>
