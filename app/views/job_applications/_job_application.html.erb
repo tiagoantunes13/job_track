@@ -1,12 +1,37 @@
-<div id="<%= dom_id job_application %>">
-  <p>
-    <strong>Company:</strong>
-    <%= job_application.company %>
-  </p>
+<div id="<%= dom_id job_application %>" class="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-8 mb-8">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold text-gray-800"><%= job_application.position %> at <%= job_application.company %></h1>
+    <span class="inline-block text-xs font-medium px-3 py-1 rounded-full <%= status_badge_class(job_application.status) %>">
+      <%= job_application.status %>
+    </span>
+  </div>
 
-  <p>
-    <strong>Position:</strong>
-    <%= job_application.position %>
-  </p>
+  <!-- Job Details -->
+  <div class="space-y-2 text-gray-700">
+    <p><strong>Company:</strong> <%= job_application.company %></p>
+    <p><strong>Position:</strong> <%= job_application.position %></p>
+    <p><strong>Applied On:</strong> <%= job_application.application_date.strftime("%b %d, %Y") if job_application.application_date %></p>
+    <p>
+      <strong>Expectations:</strong>
+      <span class="inline-block text-xs font-medium px-3 py-1 rounded-full <%= expectations_badge_class(job_application.expectations) %>">
+        <%= job_application.expectations %>
+      </span>
+    </p>
+    <p>
+      <strong>Location:</strong>
+      <%= job_application.location %>
+    </p>
+    <p><strong>Notes:</strong> <%= job_application.notes %></p>
+  </div>
 
+  <!-- Actions -->
+  <div class="mt-6 flex justify-end space-x-4">
+    <%= link_to "Edit", edit_job_application_path(job_application),
+          class: "bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition-colors" %>
+    <%= link_to "Back", job_applications_path,
+          class: "bg-blue-100 text-blue-800 px-4 py-2 rounded-full hover:bg-blue-200 transition-colors" %>
+    <%= button_to "Destroy", job_application, method: :delete,
+          class: "bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition-colors" %>
+  </div>
 </div>
