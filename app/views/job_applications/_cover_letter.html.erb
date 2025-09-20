@@ -1,0 +1,28 @@
+<div id="cover_letter" class="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-8 mb-8">
+  <!-- Heading -->
+  <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Cover Letter</h1>
+
+  <%= form_with model: job_application, class: "space-y-6" do |f| %>
+    <!-- Cover Letter Textarea -->
+    <div>
+      <%= f.label :cover_letter, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_area :cover_letter, rows: 6,
+            class: "mt-1 w-full rounded-lg border border-gray-400 bg-white px-4 py-2 text-gray-800 
+                    shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50" %>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-between">
+      <%= link_to "Generate Cover Letter",
+                  generate_cover_letter_job_application_path(job_application),
+                  data: { turbo_stream: true },
+                  class: "inline-flex items-center px-4 py-2 rounded-lg border border-gray-300 
+                          text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 
+                          transition-colors" %>
+
+      <%= f.submit "Save",
+            class: "inline-flex items-center px-6 py-2 rounded-lg bg-blue-600 text-white 
+                    font-semibold hover:bg-blue-700 transition-colors shadow-sm" %>
+    </div>
+  <% end %>
+</div>

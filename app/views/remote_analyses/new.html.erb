@@ -1,0 +1,16 @@
+<!-- app/views/remote_analyses/new.html.erb -->
+<h1 class="text-2xl font-bold mb-6">Is this job remote?</h1>
+
+<div class="bg-white p-6 rounded-2xl shadow-md max-w-xl mx-auto">
+  <%= form_with url: remote_analyses_path, method: :post do |f| %>
+    <div class="mb-4">
+      <%= f.label :job_post, "Paste the job posting:", class: "block font-semibold mb-2" %>
+      <%= f.text_area :job_post, rows: 10, class: "w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+    </div>
+
+    <%= f.submit "Check it", class: "bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition-colors" %>
+  <% end %>
+
+  <div id="location_answer"></div>
+</div>
+

@@ -1,0 +1,136 @@
+<% content_for :title, "Complete Your Profile" %>
+
+<!-- Full Page Background -->
+<div class="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
+  <!-- Card -->
+  <div class="w-full max-w-4xl bg-white shadow-lg rounded-2xl p-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Complete Your Profile</h1>
+
+    <%= form_with model: @user, url: profile_path, local: true do |f| %>
+      <!-- Basic Info Section -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.text_field :name, required: true,
+                class: "mt-1 w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-gray-800 
+                        focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" %>
+        </div>
+
+        <div>
+          <%= f.label :phone, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.telephone_field :phone,
+                class: "mt-1 w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-gray-800 
+                        focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" %>
+        </div>
+
+        <div>
+          <%= f.label :linkedin, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.url_field :linkedin,
+                class: "mt-1 w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-gray-800 
+                        focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" %>
+        </div>
+
+        <div>
+          <%= f.label :github, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.url_field :github,
+                class: "mt-1 w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-gray-800 
+                        focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" %>
+        </div>
+
+        <div class="md:col-span-2">
+          <%= f.label :summary, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.text_area :summary, rows: 4,
+                class: "mt-1 w-full rounded-lg border border-gray-400 bg-white px-3 py-2 text-gray-800 
+                        focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" %>
+        </div>
+      </div>
+
+
+      <!-- Languages -->
+      <div class="mt-8">
+        <h2 class="text-lg font-semibold text-gray-800 mb-3">Languages</h2>
+        <div id="languages" data-controller="nested-form" data-nested-form-wrapper-class="nested-fields">
+          <template data-nested-form-target="template">
+            <%= f.fields_for :languages, Language.new, child_index: "NEW_RECORD" do |language_form| %>
+              <%= render "language_fields", f: language_form %>
+            <% end %>
+          </template>
+          <%= f.fields_for :languages do |language_form| %>
+            <%= render "language_fields", f: language_form %>
+          <% end %>
+          <div data-nested-form-target="links" class="mt-3">
+            <%= link_to "Add Language", "#",
+              data: { action: "nested-form#add" },
+              class: "inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-gray-50 hover:bg-gray-100 transition" %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="mt-8">
+        <h2 class="text-lg font-semibold text-gray-800 mb-3">Skills</h2>
+        <div id="skills" data-controller="nested-form" data-nested-form-wrapper-class="nested-fields">
+          <template data-nested-form-target="template">
+            <%= f.fields_for :skills, Skill.new, child_index: "NEW_RECORD" do |skill_form| %>
+              <%= render "skill_fields", f: skill_form %>
+            <% end %>
+          </template>
+          <%= f.fields_for :skills do |skill_form| %>
+            <%= render "skill_fields", f: skill_form %>
+          <% end %>
+          <div data-nested-form-target="links" class="mt-3">
+            <%= link_to "Add Skill", "#",
+              data: { action: "nested-form#add" },
+              class: "inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-gray-50 hover:bg-gray-100 transition" %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div class="mt-8">
+        <h2 class="text-lg font-semibold text-gray-800 mb-3">Experience</h2>
+        <div id="experience" data-controller="nested-form" data-nested-form-wrapper-class="nested-fields">
+          <template data-nested-form-target="template">
+            <%= f.fields_for :experience, Experience.new, child_index: "NEW_RECORD" do |experience_form| %>
+              <%= render "experience_fields", f: experience_form %>
+            <% end %>
+          </template>
+          <%= f.fields_for :experience do |experience_form| %>
+            <%= render "experience_fields", f: experience_form %>
+          <% end %>
+          <div data-nested-form-target="links" class="mt-3">
+            <%= link_to "Add Experience", "#",
+              data: { action: "nested-form#add" },
+              class: "inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-gray-50 hover:bg-gray-100 transition" %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="mt-8">
+        <h2 class="text-lg font-semibold text-gray-800 mb-3">Education</h2>
+        <div id="education" data-controller="nested-form" data-nested-form-wrapper-class="nested-fields">
+          <template data-nested-form-target="template">
+            <%= f.fields_for :education, Education.new, child_index: "NEW_RECORD" do |education_form| %>
+              <%= render "education_fields", f: education_form %>
+            <% end %>
+          </template>
+          <%= f.fields_for :education do |education_form| %>
+            <%= render "education_fields", f: education_form %>
+          <% end %>
+          <div data-nested-form-target="links" class="mt-3">
+            <%= link_to "Add Education", "#",
+              data: { action: "nested-form#add" },
+              class: "inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-gray-50 hover:bg-gray-100 transition" %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="mt-10 text-center">
+        <%= f.submit "Save",
+          class: "px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition" %>
+      </div>
+    <% end %>
+  </div>
+</div>

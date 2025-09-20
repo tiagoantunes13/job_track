@@ -1,0 +1,64 @@
+<%= form_with(model: job_application, local: true, class: "space-y-6") do |f| %>
+  <% if job_application.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      <ul class="list-disc list-inside">
+        <% job_application.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :company, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :company, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :position, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :position, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :status, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :status, JobApplication.statuses.keys.map { |s| [s.humanize, s] }, {}, 
+          class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :expectations, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :expectations, JobApplication.expectations.keys.map { |e| [e.humanize, e] }, {}, 
+          class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :application_date, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.date_field :application_date, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :job_posting_url, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :job_posting_url, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :contact_person, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :contact_person, rows: 4, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+
+  <div>
+    <%= f.label :notes, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 4, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+
+  <div>
+    <%= f.label :post, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :post, rows: 4, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.submit "Create Job Application", class: "w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-700 transition-colors" %>
+  </div>
+<% end %>

@@ -1,4 +1,19 @@
 Rails.application.routes.draw do
+  resources :chats do
+    resources :messages, only: [:create]
+  end
+  resources :models, only: [:index, :show] do
+    collection do
+      post :refresh
+    end
+  end
+  resources :job_applications do
+    member do
+      get :generate_cover_letter
+    end
+  end
+  resources :remote_analyses, only: [:new, :create]
+
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -10,6 +25,7 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  resource :profile, only: [:new, :create, :update]
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "job_applications#index"
 end

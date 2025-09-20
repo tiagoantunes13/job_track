@@ -51,3 +51,11 @@ group :development do
 end
 
 gem "devise", "~> 4.9"
+
+gem "tailwindcss-ruby", "~> 4.1"
+
+gem "tailwindcss-rails", "~> 4.3"
+
+gem "faker", "~> 3.5"
+
+gem "ruby_llm", "~> 1.8"
