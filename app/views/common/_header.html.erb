@@ -2,9 +2,12 @@
 <header class="bg-white shadow-sm">
   <div class="container mx-auto flex items-center justify-between px-6 py-4">
     <!-- Logo / Brand -->
-    <a href="#" class="text-2xl font-bold text-blue-600 tracking-tight hover:text-blue-700 transition-colors">
+    <%= link_to job_applications_path do %>
+    <div class="text-2xl font-bold text-blue-600 tracking-tight hover:text-blue-700 transition-colors">
       ApplyTrack
-    </a>
+    </div>
+    <% end %>
+    
 
     <!-- Navigation -->
     <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
@@ -13,8 +16,6 @@
       <%= link_to 'Check Location', new_remote_analysis_path, class: "hover:text-blue-600 transition-colors" %>
       <%= link_to 'Search Jobs', job_search_list_path, class: "hover:text-blue-600 transition-colors" %>
       <%= link_to 'Saved Jobs', jobs_path, class: "hover:text-blue-600 transition-colors" %>
-      <a href="#pricing" class="hover:text-blue-600 transition-colors">Pricing</a>
-      <a href="#contact" class="hover:text-blue-600 transition-colors">Contact</a>
     </nav>
 
     <!-- CTA Button -->
@@ -22,7 +23,6 @@
       <% if current_user.present? %>
         <%= link_to 'Logout', destroy_user_session_path, data: { turbo_method: :delete }, class: "bg-red-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors" %>
         <p>
-          <%= current_user.email %>
         </p>
       <% else %>
         <%= link_to 'Sign Up Free', new_user_session_path, class: "bg-green-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors" %>
