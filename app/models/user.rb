@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :educations,  dependent: :destroy
   has_many :experiences, dependent: :destroy
   has_many :skills,      dependent: :destroy
+  has_many :ignored_jobs, dependent: :destroy
 
   accepts_nested_attributes_for :languages,   allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :educations,  allow_destroy: true, reject_if: :all_blank

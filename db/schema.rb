@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_20_143506) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_20_212058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -56,6 +56,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_143506) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_experiences_on_user_id"
+  end
+
+  create_table "ignored_jobs", force: :cascade do |t|
+    t.string "external_job_id", null: false
+    t.string "source", default: "internal", null: false
+    t.text "reason"
+    t.date "ignored_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["external_job_id"], name: "index_ignored_jobs_on_external_job_id"
+    t.index ["user_id"], name: "index_ignored_jobs_on_user_id"
   end
 
   create_table "job_applications", force: :cascade do |t|
@@ -189,6 +201,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_143506) do
   add_foreign_key "chats", "models"
   add_foreign_key "educations", "users"
   add_foreign_key "experiences", "users"
+  add_foreign_key "ignored_jobs", "users"
   add_foreign_key "job_applications", "jobs"
   add_foreign_key "job_applications", "users"
   add_foreign_key "languages", "users"

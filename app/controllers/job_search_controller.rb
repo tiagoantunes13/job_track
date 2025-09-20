@@ -1,9 +1,11 @@
 class JobSearchController < ApplicationController
+  include ApplicationHelper
   def list
     total_jobs = []
 
-    q = params[:q] || "ruby"
-    location = params[:location] || "United States"
+    q = params[:q].presence || "ruby"
+    location = params[:location].presence || "United States"
+    puts "Searching for jobs with query: #{q} in location: #{location}"
 
 
     client = SerpApi::Client.new(
@@ -33,11 +35,37 @@ class JobSearchController < ApplicationController
       total_jobs.concat(results[:jobs_results])
     end
 
-    @jobs = total_jobs.uniq { |job| job[:job_id] }
+    rejected_jobs = IgnoredJob.where(user: current_user).pluck(:external_job_id)
+    @jobs = total_jobs.reject{|job| rejected_jobs.include?(job[:job_id])}.uniq { |job| job[:job_id] }
     jobs_matter_id = JobApplication.where(user: current_user).pluck(:job_id).uniq
     jobs_matter = Job.where(id: jobs_matter_id)
     @job_external_ids = jobs_matter.where(source: 'serpapi').pluck(:external_job_id)
   rescue StandardError => e
+    puts "Error fetching jobs: #{e.message}"
     @jobs = []
+  end
+
+  def ignore_job
+    external_job_id = params[:external_job_id]
+    source = params[:source] || 'serpapi'
+    reason = params[:reason] || 'No reason provided'
+
+    ignored_job = IgnoredJob.new(
+      external_job_id: external_job_id,
+      source: source,
+      reason: reason,
+      user: current_user
+    )
+    puts "REMOVING #{dom_id_for_json(external_job_id)}"
+    if ignored_job.save
+      respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(dom_id_for_json(external_job_id))
+      end
+      format.html { redirect_to job_search_list_path, notice: "Job ignored successfully.", status: :see_other }
+    end
+    else
+      redirect_to job_search_list_path, alert: "Failed to ignore job: #{ignored_job.errors.full_messages.join(', ')}", status: :see_other
+    end
   end
 end

@@ -52,8 +52,8 @@
     <% if @jobs.any? %>
       <div id="job_listings" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         <% @jobs.each do |job| %>
-          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-indigo-200 transform hover:-translate-y-0.5 transition-all duration-200 flex flex-col h-full">
-            
+          <div id=<%= dom_id_for_json(job[:job_id]) %> class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-indigo-200 transform hover:-translate-y-0.5 transition-all duration-200 flex flex-col h-full">
+            <%= button_to 'ignore job', ignore_job_path(external_job_id: job[:job_id])%>
             <!-- Title -->
             <h2 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
               <%= link_to job[:title], job[:share_link], target: "_blank", rel: "noopener", class: "hover:underline" %>
