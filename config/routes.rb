@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+
+
   get 'job_search/list', to: 'job_search#list', as: 'job_search_list'
   post 'job_search/ignore_job', to: 'job_search#ignore_job', as: 'ignore_job'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -32,5 +34,10 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:new, :create, :update]
   # Defines the root path route ("/")
-  root "job_applications#index"
+  root "pages#landing"
+  
+  get 'pricing', to: 'pages#pricing', as: 'pricing'
+  get 'features', to: 'pages#features', as: 'features'
+  get 'testimonials', to: 'pages#testimonials', as: 'testimonials'
+  get 'contact', to: 'pages#contact', as: 'contact'
 end

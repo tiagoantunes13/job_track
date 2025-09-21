@@ -1,7 +1,5 @@
 class RemoteAnalysesController < ApplicationController
 
-  before_action :authenticate_user!
-
   # GET /remote_analyses/new
   def new
   end

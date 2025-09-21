@@ -1,6 +1,5 @@
 class JobApplicationsController < ApplicationController
   before_action :set_job_application, only: %i[ show edit update destroy generate_cover_letter ]
-  before_action :authenticate_user!, except: %i[ index ]
 
   # GET /job_applications
   def index

@@ -1,6 +1,5 @@
 # app/controllers/profiles_controller.rb
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!
 
   # GET /profile/new
   def new

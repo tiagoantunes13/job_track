@@ -1,0 +1,62 @@
+<div class="px-10 flex flex-1 justify-center py-5 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 min-h-screen">
+  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+    
+    <!-- Hero Section -->
+    <div class="flex flex-col gap-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 rounded-xl p-8 shadow-xl items-center justify-center text-center animate-fade-in">
+      <div class="flex flex-col gap-4">
+        <h1 class="text-white text-4xl font-extrabold leading-tight tracking-tight @[480px]:text-5xl">
+          Streamline Your Job Search
+        </h1>
+        <p class="text-white text-lg font-medium max-w-[720px]">
+          CareerTrack helps software engineers efficiently manage and track their job applications, ensuring no opportunity is missed.
+        </p>
+      </div>
+      <button class="mt-4 px-6 py-3 bg-white text-blue-700 font-bold rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+        Get Started
+      </button>
+    </div>
+
+    <!-- Features Section -->
+    <div class="flex flex-col gap-10 px-4 py-16">
+      <div class="text-center flex flex-col gap-4">
+        <h2 class="text-white text-3xl font-bold @[480px]:text-4xl">Key Features</h2>
+        <p class="text-gray-300 max-w-[720px] mx-auto">
+          CareerTrack offers a suite of tools designed to simplify your job application process.
+        </p>
+        <button class="mt-4 px-6 py-2 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 w-fit mx-auto">
+          Explore All Features
+        </button>
+      </div>
+
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-6 mt-10">
+        <!-- Feature Card -->
+        <div class="flex flex-col gap-3 p-6 bg-gray-800 rounded-xl shadow-lg hover:bg-gray-700 transition-colors duration-300">
+          <div class="text-blue-400 text-2xl">✔</div>
+          <h3 class="text-white font-bold text-lg">Application Tracking</h3>
+          <p class="text-gray-400 text-sm">Easily log and monitor the status of each application, from submission to interview.</p>
+        </div>
+
+        <div class="flex flex-col gap-3 p-6 bg-gray-800 rounded-xl shadow-lg hover:bg-gray-700 transition-colors duration-300">
+          <div class="text-blue-400 text-2xl">⏰</div>
+          <h3 class="text-white font-bold text-lg">Deadline Management</h3>
+          <p class="text-gray-400 text-sm">Stay ahead of deadlines with automated reminders for application submissions and interviews.</p>
+        </div>
+
+        <div class="flex flex-col gap-3 p-6 bg-gray-800 rounded-xl shadow-lg hover:bg-gray-700 transition-colors duration-300">
+          <div class="text-blue-400 text-2xl">📊</div>
+          <h3 class="text-white font-bold text-lg">Performance Analytics</h3>
+          <p class="text-gray-400 text-sm">Gain insights into your application success rates and identify areas for improvement.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="flex flex-col gap-6 px-4 py-16 text-center">
+      <h2 class="text-white text-3xl font-bold @[480px]:text-4xl">Ready to Take Control of Your Career?</h2>
+      <p class="text-gray-300 max-w-[720px] mx-auto">
+        Join thousands of software engineers who are landing their dream jobs with CareerTrack.
+      </p>
+      <%= link_to 'Sign Up Free', new_user_session_path, class: "mt-4 px-8 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:scale-105 transition-transform duration-300" %>
+    </div>
+  </div>
+</div>

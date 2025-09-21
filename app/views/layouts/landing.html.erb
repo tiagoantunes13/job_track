@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= content_for(:title) || "Job Radar" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <!-- Navbar -->
+    <div class="relative flex size-full min-h-screen flex-col bg-[#101a23] dark group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+  <div class="layout-container flex h-full grow flex-col">
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#223649] px-10 py-3">
+    <%= link_to root_path do %>
+      
+      <div class="flex items-center gap-4 text-white">
+        <div class="size-4">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z"
+              fill="currentColor"
+            ></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </div>
+        <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">ApplyTrack</h2>
+      </div>
+      <% end %>
+      <div class="flex flex-1 justify-end gap-8">
+        <div class="flex items-center gap-9">
+          <%= link_to 'Features', root_path, class: "text-white text-sm font-medium leading-normal" %>
+          <%= link_to 'Pricing', pricing_path, class: "text-white text-sm font-medium leading-normal" %>
+          <%= link_to 'Contact', contact_path, class: "text-white text-sm font-medium leading-normal" %>
+        </div>
+        <%= link_to 'Sign Up Free', new_user_session_path, class: "flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0c7ff2] text-white text-sm font-bold leading-normal tracking-[0.015em]" %>
+      </div>
+    </header>
+
+    <%= yield %>
+
+    <!-- Footer -->
+    <footer class="flex justify-center">
+      <div class="flex max-w-[960px] flex-1 flex-col">
+        <footer class="flex flex-col gap-6 px-5 py-10 text-center @container">
+          <div class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
+            <a class="text-[#90adcb] text-base font-normal leading-normal min-w-40" href="#">Privacy Policy</a>
+            <a class="text-[#90adcb] text-base font-normal leading-normal min-w-40" href="#">Terms of Service</a>
+            <a class="text-[#90adcb] text-base font-normal leading-normal min-w-40" href="#">Contact Us</a>
+          </div>
+          <p class="text-[#90adcb] text-base font-normal leading-normal">© 2024 CareerTrack. All rights reserved.</p>
+        </footer>
+      </div>
+    </footer>
+      </div>
+</div>
+  </body>
+</html>
