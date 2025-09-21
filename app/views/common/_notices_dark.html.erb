@@ -1,0 +1,8 @@
+<!-- Add this to your main layout file (app/views/layouts/application.html.erb) -->
+<!-- Place it where you want alerts to appear -->
+
+<% flash.each do |type, message| %>
+  <div class="<%= flash_class(type) %> mx-4 my-4 p-4 rounded-lg">
+    <%= message %>
+  </div>
+<% end %>

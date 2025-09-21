@@ -5,53 +5,56 @@
         <p class="text-white tracking-light text-[32px] font-bold leading-tight">Contact Us</p>
         <p class="text-[#8fadcc] text-sm font-normal leading-normal">We're here to help! Reach out with any questions or feedback.</p>
       </div>
-    </div>
-    <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-      <label class="flex flex-col min-w-40 flex-1">
-        <p class="text-white text-base font-medium leading-normal pb-2">Your Name</p>
-        <input
-          placeholder="Enter your name"
-          class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#304d69] bg-[#182634] focus:border-[#304d69] h-14 placeholder:text-[#8fadcc] p-[15px] text-base font-normal leading-normal"
-          value=""
-        />
-      </label>
-    </div>
-    <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-      <label class="flex flex-col min-w-40 flex-1">
-        <p class="text-white text-base font-medium leading-normal pb-2">Your Email</p>
-        <input
-          placeholder="Enter your email"
-          class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#304d69] bg-[#182634] focus:border-[#304d69] h-14 placeholder:text-[#8fadcc] p-[15px] text-base font-normal leading-normal"
-          value=""
-        />
-      </label>
-    </div>
-    <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-      <label class="flex flex-col min-w-40 flex-1">
-        <p class="text-white text-base font-medium leading-normal pb-2">Subject</p>
-        <input
-          placeholder="Enter the subject"
-          class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#304d69] bg-[#182634] focus:border-[#304d69] h-14 placeholder:text-[#8fadcc] p-[15px] text-base font-normal leading-normal"
-          value=""
-        />
-      </label>
-    </div>
-    <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-      <label class="flex flex-col min-w-40 flex-1">
-        <p class="text-white text-base font-medium leading-normal pb-2">Message</p>
-        <textarea
-          placeholder="Enter your message"
-          class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#304d69] bg-[#182634] focus:border-[#304d69] min-h-36 placeholder:text-[#8fadcc] p-[15px] text-base font-normal leading-normal"
-        ></textarea>
-      </label>
-    </div>
-    <div class="flex px-4 py-3 justify-start">
-      <button
-        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0b80f4] text-white text-sm font-bold leading-normal tracking-[0.015em]"
-      >
-        <span class="truncate">Send Message</span>
-      </button>
-    </div>
+      
+      </div>
+      <div id="contact_form">
+        <%= form_with model: @contact_message do |f| %>
+          <% if @contact_message.errors.any? %>
+            <div class="flex max-w-[480px] mx-4 mb-4 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+              <div class="flex flex-col">
+                <h4 class="text-red-400 font-semibold mb-2">Please fix the following errors:</h4>
+                <ul class="text-red-300 text-sm space-y-1">
+                  <% @contact_message.errors.full_messages.each do |message| %>
+                    <li>• <%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <div class="flex flex-col min-w-40 flex-1">
+              <%= f.label :name, class: "text-white text-base font-medium leading-normal pb-2" %>
+              <%= f.text_field :name, class: "form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#304d69] bg-[#182634] focus:border-[#304d69] h-14 placeholder:text-[#8fadcc] p-[15px] text-base font-normal leading-normal", placeholder: "Enter your name"%>
+            </div>
+          </div>
+
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <div class="flex flex-col min-w-40 flex-1">
+              <%= f.label :email, class: "text-white text-base font-medium leading-normal pb-2" %>
+              <%= f.email_field :email, class: "form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#304d69] bg-[#182634] focus:border-[#304d69] h-14 placeholder:text-[#8fadcc] p-[15px] text-base font-normal leading-normal", placeholder: "Enter your email"%>
+            </div>
+          </div>
+
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <div class="flex flex-col min-w-40 flex-1">
+              <%= f.label :subject, class: "text-white text-base font-medium leading-normal pb-2" %>
+              <%= f.text_field :subject, class: "form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#304d69] bg-[#182634] focus:border-[#304d69] h-14 placeholder:text-[#8fadcc] p-[15px] text-base font-normal leading-normal", placeholder: "Enter the subject"%>
+            </div>
+          </div>
+
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <div class="flex flex-col min-w-40 flex-1">
+              <%= f.label :message, class: "text-white text-base font-medium leading-normal pb-2" %>
+              <%= f.text_area :message, class: "form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#304d69] bg-[#182634] focus:border-[#304d69] h-14 placeholder:text-[#8fadcc] p-[15px] text-base font-normal leading-normal", placeholder: "Enter your message"%>
+            </div>
+          </div>
+
+          <div class="flex px-4 py-3 justify-start">
+            <%= f.submit "Send Message", class: "flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0b80f4] text-white text-sm font-bold leading-normal tracking-[0.015em]"%>
+          </div>
+        <% end %>
+      </div>
     <h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Contact Information</h3>
     <p class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4">Email: support@codetrack.com</p>
     <h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Frequently Asked Questions</h3>

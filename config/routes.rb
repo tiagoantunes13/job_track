@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :contact_messages, only: [:new, :create]
+
 
 
   get 'job_search/list', to: 'job_search#list', as: 'job_search_list'

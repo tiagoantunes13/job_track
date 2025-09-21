@@ -11,7 +11,9 @@ class PagesController < ApplicationController
 
   def testimonials; end
 
-  def contact; end
+  def contact
+    @contact_message = ContactMessage.new
+  end
 
   private
 
