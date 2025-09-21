@@ -5,43 +5,33 @@ class JobSearchController < ApplicationController
 
     q = params[:q].presence || "ruby"
     location = params[:location].presence || "United States"
-    puts "Searching for jobs with query: #{q} in location: #{location}"
 
+    results = []
 
-    client = SerpApi::Client.new(
-      engine: "google_jobs",
-      q: q,
-      hl: "en",
-      api_key: "b0e398e2656330e190767422ffde9a046d13ced4dc3cb360fc724d5ca3652d64",
-      location: location,
-    )
-
-    results = client.search || []
-    total_jobs.concat(results[:jobs_results])
-    n = 0
-
-    while n < 1
-      n += 1
-      # break if results[:serpapi_pagination] && results[:serpapi_pagination][:next_page_token].nil?
+    rejected_jobs = IgnoredJob.where(user: current_user).pluck(:external_job_id)
+    loop do
+      # break if no next page token
+      next_page_token = (results.present? && results[:serpapi_pagination].present?) ? results[:serpapi_pagination][:next_page_token] : nil
+      break if results.present? && next_page_token.nil?
       client = SerpApi::Client.new(
         engine: "google_jobs",
         q: q,
         hl: "en",
         api_key: "b0e398e2656330e190767422ffde9a046d13ced4dc3cb360fc724d5ca3652d64",
         location: location,
-        # next_page_token: results[:serpapi_pagination]&[:next_page_token] || nil
+        next_page_token: next_page_token
       )
       results = client.search || []
-      total_jobs.concat(results[:jobs_results])
+      jobs_to_add = results[:jobs_results].reject { |job| rejected_jobs.include?(job[:job_id]) }
+      total_jobs.concat(jobs_to_add)
+      break if total_jobs.size >= 10 || results[:jobs_results].empty?
     end
 
-    rejected_jobs = IgnoredJob.where(user: current_user).pluck(:external_job_id)
-    @jobs = total_jobs.reject{|job| rejected_jobs.include?(job[:job_id])}.uniq { |job| job[:job_id] }
+    @jobs = total_jobs.uniq { |job| job[:job_id] }
     jobs_matter_id = JobApplication.where(user: current_user).pluck(:job_id).uniq
     jobs_matter = Job.where(id: jobs_matter_id)
     @job_external_ids = jobs_matter.where(source: 'serpapi').pluck(:external_job_id)
   rescue StandardError => e
-    puts "Error fetching jobs: #{e.message}"
     @jobs = []
   end
 
@@ -56,7 +46,6 @@ class JobSearchController < ApplicationController
       reason: reason,
       user: current_user
     )
-    puts "REMOVING #{dom_id_for_json(external_job_id)}"
     if ignored_job.save
       respond_to do |format|
       format.turbo_stream do
