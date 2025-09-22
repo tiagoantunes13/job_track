@@ -7,8 +7,9 @@ class RemoteAnalysesController < ApplicationController
   # POST /remote_analyses
 
   def create
-    RubyLLM.configure { |c| c.openai_api_base = "http://localhost:11434/v1" }
-    chat = RubyLLM.chat(model: "llama2", provider: :ollama, assume_model_exists: true)
+    # RubyLLM.configure { |c| c.openai_api_base = "http://localhost:11434/v1" }
+    # chat = RubyLLM.chat(model: "llama2", provider: :ollama, assume_model_exists: true)
+    chat = RubyLLM.chat(model: "gpt-5-nano-2025-08-07", provider: :openai)
     @response = chat.with_schema(AnalysisSchema).ask(generate_prompt(params[:job_post])).content
   end
 
