@@ -97,7 +97,7 @@ accessories:
       clear:
         POSTGRES_DB: job_radar_production
         POSTGRES_USER: job_radar
-        POSTGRES_PASSWORD: secure_postgres_password_123
+        POSTGRES_PASSWORD: your_db_password
         POSTGRES_MULTIPLE_DATABASES: job_radar_production,job_radar_production_cache,job_radar_production_queue
     directories:
       - data:/var/lib/postgresql/data
