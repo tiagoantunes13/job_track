@@ -84,6 +84,8 @@ production:
     database: job_radar_production
     username: job_radar
     password: <%= ENV["JOB_RADAR_DATABASE_PASSWORD"] %>
+    host: <%= ENV["DB_HOST"] || "localhost" %>
+    port: <%= ENV["DB_PORT"] || 5432 %>
   cache:
     <<: *primary_production
     database: job_radar_production_cache
