@@ -1,16 +1,110 @@
 <!-- app/views/remote_analyses/new.html.erb -->
-<h1 class="text-2xl font-bold mb-6">Is this job remote?</h1>
-
-<div class="bg-white p-6 rounded-2xl shadow-md max-w-xl mx-auto">
-  <%= form_with url: remote_analyses_path, method: :post do |f| %>
-    <div class="mb-4">
-      <%= f.label :job_post, "Paste the job posting:", class: "block font-semibold mb-2" %>
-      <%= f.text_area :job_post, rows: 10, class: "w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center">
+        <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c-5 0-9-4-9-9s4-9 9-9"></path>
+        </svg>
+      </div>
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">Is this job remote?</h1>
+      <p class="text-lg text-gray-600">Analyze job postings to determine remote work availability</p>
     </div>
 
-    <%= f.submit "Check it", class: "bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition-colors" %>
-  <% end %>
+    <!-- Main Form Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-lg transition-all duration-300">
+      <%= form_with url: remote_analyses_path, method: :post, local: true do |f| %>
+        
+        <!-- Job Posting Input Section -->
+        <div class="mb-6">
+          <div class="flex items-center mb-4">
+            <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <%= f.label :job_post, "Job Posting Content", class: "text-lg font-semibold text-gray-900" %>
+          </div>
+          
+          <p class="text-sm text-gray-600 mb-4">
+            Paste the complete job description, requirements, and any location information from the job posting.
+          </p>
+          
+          <%= f.text_area :job_post, 
+              rows: 12, 
+              placeholder: "Paste the job posting here...\n\nExample:\nSoftware Engineer - Full Stack Developer\nLocation: Remote/San Francisco\nWe are looking for a talented developer...",
+              class: "w-full border border-gray-300 rounded-xl p-4 
+                       focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+                       transition-all duration-200 text-sm leading-relaxed
+                       resize-y min-h-[300px]
+                       placeholder:text-gray-400" %>
+          
+          <div class="mt-3">
+            <p class="text-xs text-gray-500">
+              <span class="inline-flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                The more detailed the job posting, the more accurate the analysis
+              </span>
+            </p>
+          </div>
+        </div>
 
-  <div id="location_answer"></div>
+        <!-- Submit Section -->
+        <div class="flex items-center justify-center pt-6 border-t border-gray-100">
+          <%= f.submit "Analyze Remote Status", 
+              class: "inline-flex items-center px-8 py-4 bg-indigo-600 hover:bg-indigo-700 
+                       text-white font-semibold rounded-xl shadow-lg hover:shadow-xl 
+                       transform hover:-translate-y-0.5 transition-all duration-200
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                       disabled:opacity-50 disabled:cursor-not-allowed text-lg" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Results Section -->
+    <div id="location_answer" class="mt-8"></div>
+    
+    <!-- Info Cards -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div class="flex items-center mb-3">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-900">Accurate Analysis</h3>
+        </div>
+        <p class="text-sm text-gray-600">AI-powered analysis of job postings to detect remote work opportunities and location requirements.</p>
+      </div>
+      
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div class="flex items-center mb-3">
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-900">Quick Results</h3>
+        </div>
+        <p class="text-sm text-gray-600">Get instant analysis results with detailed explanations about the remote work policy.</p>
+      </div>
+      
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div class="flex items-center mb-3">
+          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-900">Smart Detection</h3>
+        </div>
+        <p class="text-sm text-gray-600">Identifies hybrid, fully remote, and location-specific opportunities with confidence scores.</p>
+      </div>
+    </div>
+  </div>
 </div>
-
