@@ -1,8 +1,6 @@
 <% content_for :title, @job.title %>
-
 <div class="min-h-screen bg-gray-50 py-8">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
     <!-- Job Header -->
     <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
       <div class="flex items-start justify-between mb-6">
@@ -39,12 +37,12 @@
         
         <!-- Actions -->
         <div class="flex flex-col sm:flex-row gap-3">
-            <%= link_to edit_job_path(@job), class: "inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors" do %>
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-              </svg>
-              Edit Job
-            <% end %>
+          <%= link_to edit_job_path(@job), class: "inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors" do %>
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+            Edit Job
+          <% end %>
           
           <% if @job.job_posting_url.present? %>
             <%= link_to @job.job_posting_url, target: "_blank", class: "inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors" do %>
@@ -59,42 +57,83 @@
 
       <!-- User Status with Job -->
       <div class="border-t border-gray-200 pt-6">
-        <div class="flex flex-wrap items-center gap-4">
-          <!-- Saved Status -->
-          
-
-          <!-- Application Status -->
-          <div class="flex items-center">
-            <% if @applied_by_user %>
-              <% application = current_user.job_applications.find_by(job: @job) %>
-              <span class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-xl font-medium">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                </svg>
-                Applied (<%= application.status.humanize %>)
-              </span>
-              <%= link_to "View Application", job_application_path(application),
-                  class: "text-indigo-600 hover:text-indigo-800 font-medium ml-2" %>
-            <% else %>
-              <%= link_to new_job_application_path(job_id: @job.id),
-                          class: "inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-xl transition-colors" do %>
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                Apply Now
-                <div class="mt-auto">
-                  <% @job.apply_links.each do |link| %>
-                    <%= link_to link.source, link.url, target: "_blank", rel: "noopener",
-                          class: "inline-block px-4 py-2 mr-2 mb-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition" %>
-                  <% end %>
-                 </div>
-              <% end %>
-            <% end %>
+        <% if @applied_by_user %>
+          <% application = current_user.job_applications.find_by(job: @job) %>
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-xl font-medium">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              Applied (<%= application.status.humanize %>)
+            </span>
+            <%= link_to "View Application", job_application_path(application),
+                class: "text-indigo-600 hover:text-indigo-800 font-medium" %>
           </div>
-        </div>
+        <% else %>
+          <div class="text-center text-gray-500">
+            <span class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-xl font-medium">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Ready to apply
+            </span>
+          </div>
+        <% end %>
       </div>
     </div>
+
+    <!-- Application Actions Section (Only show if not applied) -->
+    <% unless @applied_by_user %>
+      <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-2xl font-bold text-gray-900">Track Your Application</h3>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+            <div class="w-2 h-2 rounded-full bg-blue-400 mr-1.5"></div>
+            Ready to Track
+          </span>
+        </div>
+
+        <!-- Main Track Button -->
+        <div class="mb-6">
+          <%= link_to new_job_application_path(job_id: @job.id),
+                      class: "w-full inline-flex items-center justify-center px-8 py-4 bg-indigo-600 hover:bg-indigo-700 
+                             text-white font-semibold rounded-xl shadow-lg hover:shadow-xl 
+                             transform hover:-translate-y-0.5 transition-all duration-200
+                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-lg" do %>
+            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+            </svg>
+            Log My Application
+          <% end %>
+        </div>
+
+        <!-- External Apply Links -->
+        <% if @job.apply_links.present? %>
+          <div class="border-t border-gray-100 pt-6">
+            <h4 class="text-lg font-medium text-gray-700 mb-4">Apply directly first:</h4>
+            <div class="flex flex-wrap gap-3">
+              <% @job.apply_links.each do |link| %>
+                <%= link_to link.url, target: "_blank", rel: "noopener",
+                      class: "inline-flex items-center px-6 py-3 bg-indigo-50 hover:bg-indigo-100 
+                             text-indigo-700 font-medium rounded-xl border border-indigo-200
+                             hover:border-indigo-300 transition-all duration-200
+                             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" do %>
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                  Apply on <%= link.source %>
+                <% end %>
+              <% end %>
+            </div>
+            <p class="text-sm text-gray-600 mt-4 italic">
+              After applying through one of these links, come back and log your application to track its progress.
+            </p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
     <!-- Job Description -->
     <% if @job.description.present? %>
