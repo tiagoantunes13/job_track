@@ -28,10 +28,11 @@
     <!-- Navigation -->
     <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
       <%= link_to 'Applications', job_applications_path, class: "hover:text-blue-600 transition-colors" %>
-      <%= link_to 'Profile', new_profile_path, class: "hover:text-blue-600 transition-colors" %>
+      <%= link_to 'Profile', edit_profile_path, class: "hover:text-blue-600 transition-colors" %>
       <%= link_to 'Check Location', new_remote_analysis_path, class: "hover:text-blue-600 transition-colors" %>
       <%= link_to 'Search Jobs', job_search_list_path, class: "hover:text-blue-600 transition-colors" %>
       <%= link_to 'Saved Jobs', jobs_path, class: "hover:text-blue-600 transition-colors" %>
+      <%= link_to 'Import CV',  new_resume_path, class: "hover:text-blue-600 transition-colors" %>
     </nav>
 
     <!-- CTA Button -->

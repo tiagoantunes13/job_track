@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :skills,      dependent: :destroy
   has_many :ignored_jobs, dependent: :destroy
 
+  has_one_attached :cv
+
   accepts_nested_attributes_for :languages,   allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :educations,  allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :experiences, allow_destroy: true, reject_if: :all_blank
