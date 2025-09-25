@@ -17,7 +17,7 @@ class JobSearchController < ApplicationController
         engine: "google_jobs",
         q: q,
         hl: "en",
-        api_key: "b0e398e2656330e190767422ffde9a046d13ced4dc3cb360fc724d5ca3652d64",
+        api_key: Rails.application.credentials.serpapi_key,
         location: location,
         next_page_token: next_page_token
       )
