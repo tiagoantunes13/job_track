@@ -1,24 +1,35 @@
-# README
+# Job Track
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple job application tracking system built with Rails. Helps you keep track of job applications, generate cover letters, and manage your job search.
 
-Things you may want to cover:
+## What it does
 
-* Ruby version
+- Track job applications with status updates (applied, interviewing, rejected, etc.)
+- Store your profile with education, experience, and skills
+- Generate cover letters automatically using AI
+- Upload and manage your CV
+- Keep notes on each application
 
-* System dependencies
+## Setup
 
-* Configuration
+You'll need Ruby 3.x and PostgreSQL installed.
 
-* Database creation
+```bash
+bundle install
+rails db:create db:migrate
+rails server
+```
 
-* Database initialization
+## Usage
 
-* How to run the test suite
+Create an account, fill out your profile, then start tracking your job applications. The app will help you generate cover letters based on your profile and the job description.
 
-* Services (job queues, cache servers, search engines, etc.)
+## Tech Stack
 
-* Deployment instructions
+- Rails 8
+- PostgreSQL
+- Tailwind CSS
+- Hotwire (Turbo + Stimulus)
+- Devise for authentication
 
-* ...
+That's about it. Pretty straightforward job tracking app.
