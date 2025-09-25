@@ -28,8 +28,8 @@ class User < ApplicationRecord
       github: github,
       summary: summary,
       languages: languages.map { |lang| { name: lang.name, proficiency: lang.proficiency } },
-      educations: educations.map { |edu| { institution: edu.institution, degree: edu.degree, field_of_study: edu.field_of_study, start_date: edu.start_date, end_date: edu.end_date } },
-      experiences: experiences.map { |exp| { company: exp.company, position: exp.position, start_date: exp.start_date, end_date: exp.end_date, description: exp.description } },
+      educations: educations.map { |edu| { institution: edu.institution, degree: edu.degree, start_date: edu.start_date, end_date: edu.end_date } },
+      experiences: experiences.map { |exp| { company: exp.company, start_date: exp.start_date, end_date: exp.end_date, description: exp.description } },
       skills: skills.map { |skill| { name: skill.name, proficiency: skill.proficiency } }
     }.to_json
   end

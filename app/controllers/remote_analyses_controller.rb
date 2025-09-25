@@ -8,7 +8,8 @@ class RemoteAnalysesController < ApplicationController
 
   def create
     # chat = RubyLLM.chat(model: "llama2", provider: :ollama, assume_model_exists: true)
-    chat = RubyLLM.chat(model: "gpt-5-nano-2025-08-07", provider: :openai)
+    # chat = RubyLLM.chat(model: "gpt-5-nano-2025-08-07", provider: :openai)
+    chat = RubyLLM.chat(model: "qwen3:14b", provider: :ollama, assume_model_exists: true)
     @response = chat.with_schema(AnalysisSchema).ask(generate_prompt(params[:job_post])).content
   end
 
