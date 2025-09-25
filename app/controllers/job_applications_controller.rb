@@ -49,9 +49,8 @@ class JobApplicationsController < ApplicationController
   end
 
   def generate_cover_letter
-    # RubyLLM.configure { |c| c.openai_api_base = "http://localhost:11434/v1" }
-    # chat = RubyLLM.chat(model: "llama2", provider: :ollama, assume_model_exists: true)
-    chat = RubyLLM.chat(model: "gpt-5-nano-2025-08-07", provider: :openai)
+    chat = RubyLLM.chat(model: "qwen3:14b", provider: :ollama, assume_model_exists: true)
+    # chat = RubyLLM.chat(model: "gpt-5-nano-2025-08-07", provider: :openai)
     response = chat.ask(@job_application.generate_cover_letter)
 
     @job_application.cover_letter = response.content
