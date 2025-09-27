@@ -1,17 +1,14 @@
 class JobsController < ApplicationController
-  # before_action :set_job, only: %i[ show edit update destroy ]
+  before_action :set_job, only: %i[ create show edit update ]
 
   def index
     @jobs = Job.all.order(created_at: :desc)
   end
 
   def new
-    @job = Job.new
   end
 
   def create
-    @job = Job.new(job_params)
-
     if @job.save
       redirect_to @job, notice: 'Job was successfully created.', status: :see_other
     else
@@ -20,8 +17,18 @@ class JobsController < ApplicationController
   end
 
   def show
-    @job = Job.find(params[:id])
     @applied_by_user = current_user.job_applications.exists?(job_id: @job.id)
+  end
+
+  def edit
+  end
+
+  def update
+    if @job.update(job_params)
+      redirect_to @job, notice: 'Job was successfully updated.', status: :see_other
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def from_serpapi
@@ -62,6 +69,6 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:title, :company, :location, :job_posting_url, :description, :external_job_id, :source, :job_data)
+    params.require(:job).permit(:title, :company, :location, :job_posting_url, :description, :external_job_id, :source, :job_data, :company_details)
   end
 end
