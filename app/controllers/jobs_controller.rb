@@ -1,11 +1,12 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: %i[ new create show edit update ]
+  before_action :set_job, only: %i[ create show edit update ]
 
   def index
     @jobs = Job.all.order(created_at: :desc)
   end
 
   def new
+    @job = Job.new
   end
 
   def create
