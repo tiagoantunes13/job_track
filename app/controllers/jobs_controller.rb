@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: %i[ create show edit update ]
+  before_action :set_job, only: %i[ show edit update ]
 
   def index
     @jobs = Job.all.order(created_at: :desc)
@@ -10,6 +10,7 @@ class JobsController < ApplicationController
   end
 
   def create
+    @job = Job.new(job_params)
     if @job.save
       redirect_to @job, notice: 'Job was successfully created.', status: :see_other
     else
